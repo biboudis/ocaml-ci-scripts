@@ -61,7 +61,7 @@ install_on_linux () {
        exit 1 ;;
   esac
 
-  sudo add-apt-repository --yes ppa:${ppa}
+  sudo add-apt-repository --yes -f ppa:${ppa}
   sudo apt-get update -qq
   sudo apt-get install -y \
      "$(full_apt_version ocaml $OCAML_VERSION)" \
