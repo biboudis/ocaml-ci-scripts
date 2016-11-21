@@ -127,6 +127,7 @@ export OPAMYES=1
 case $OPAM_INIT in
   true)
       opam init -a "$BASE_REMOTE" --comp="$OPAM_SWITCH"
+      opam switch "$OCAML_VERSION"+BER
       eval $(opam config env)
       ;;
 esac
