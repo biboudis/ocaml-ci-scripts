@@ -16,6 +16,7 @@ set -uex
 
 # the ocaml version to test
 OCAML_VERSION=${OCAML_VERSION:-latest}
+OCAML_EXTENSION=${OCAML_EXTENSION:}
 OPAM_VERSION=${OPAM_VERSION:-1.2.2}
 OPAM_INIT=${OPAM_INIT:-true}
 OPAM_SWITCH=${OPAM_SWITCH:-system}
@@ -51,9 +52,6 @@ install_on_linux () {
     4.02,1.2.0) OPAM_SWITCH=4.02.3; ppa=avsm/ocaml42+opam120 ;;
     4.02,1.2.1) OPAM_SWITCH=4.02.3; ppa=avsm/ocaml42+opam121 ;;
     4.02,1.2.2) ppa=avsm/ocaml42+opam12 ;;
-    4.02.1,1.2.2)
-       OCAML_VERSION=4.02; OPAM_SWITCH="4.03.0";
-       ppa=avsm/ocaml42+opam12 ;;
     4.03,1.2.2)
        OCAML_VERSION=4.02; OPAM_SWITCH="4.03.0";
        ppa=avsm/ocaml42+opam12 ;;
@@ -130,7 +128,10 @@ export OPAMYES=1
 case $OPAM_INIT in
   true)
       opam init -a "$BASE_REMOTE" --comp="$OPAM_SWITCH"
-      opam switch "$OCAML_VERSION"+BER
+      case "$OCAML_EXTENSION" in
+         +BER) OCAML_VERSION=4.02.1;;
+      esac
+      opam switch "$OCAML_VERSION$OCAML_EXTENSION"
       eval $(opam config env)
       ;;
 esac
